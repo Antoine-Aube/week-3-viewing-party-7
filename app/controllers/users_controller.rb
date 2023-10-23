@@ -8,16 +8,35 @@ class UsersController <ApplicationController
   end 
 
   def create
+    # require 'pry';binding.pry
     user = user_params
-    user[:username] = user[:username].downcase
+    user[:name] = user[:name].downcase
     new_user = User.create(user)
-    if user.save
-      redirect_to user_path(user)
+    if new_user.save
+      flash[:success] = "Welcome, #{new_user.name}!"
+      redirect_to user_path(new_user)
     else  
-      flash[:error] = user.errors.full_messages.to_sentence
+      flash[:error] = new_user.errors.full_messages.to_sentence
       redirect_to register_path
     end 
-  end 
+  end
+
+  def login_form
+
+  end
+
+  def login
+    user = User.find_by(email: params[:email])&.authenticate(params[:password])
+    # require 'pry';binding.pry
+    if user
+      flash[:success] = "Welcome, #{user.name}!"
+      session[:user_id] = user[:id]
+      redirect_to user_path(user)
+    else
+      flash[:error] = "Credentials are incorrect"
+      redirect_to login_path
+    end
+  end
 
   private 
 
