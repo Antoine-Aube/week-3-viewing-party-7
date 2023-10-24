@@ -1,6 +1,6 @@
 class UsersController <ApplicationController 
   before_action :require_login, only: [:show]
-  
+
   def new 
     @user = User.new()
   end 
@@ -57,7 +57,7 @@ class UsersController <ApplicationController
   end
 
   def logout
-    session[:user_id] = nil
+    session.clear
     redirect_to root_path
   end
 
