@@ -35,7 +35,11 @@ RSpec.describe 'Landing Page' do
   # end 
 
   it "will not allow a user to visit dashboard unless they are loggedin" do 
-    visit "/users/#{@user1.id}"
+    # visit login_path
+    # fill_in :email, with: @user1.email
+    # fill_in :password, with: @user1.password
+    # click_button 'Log In'
+    visit user_path
 
 
     expect(page).to have_content("You must be logged in to access your dashboard")
