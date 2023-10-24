@@ -6,4 +6,12 @@ class User <ApplicationRecord
   has_secure_password
   
   enum role: %w[default manager admin]
+
+  def admin?
+    true if role == "admin"
+  end
+
+  def manager?
+    true if role == "manager"
+  end
 end 

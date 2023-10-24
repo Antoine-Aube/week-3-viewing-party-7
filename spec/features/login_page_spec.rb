@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Log in page" do 
   it "can log in a user if valid password is input" do
-    user = User.create(id: 1, name: "guy", email:"guy@guy.com", password: "password", password_confirmation: "password")
+    user = User.create(id: 1, name: "guy", email:"guy@guy.com", password: "password", password_confirmation: "password", role: 0)
     visit login_path
 
     fill_in :email, with: user.email

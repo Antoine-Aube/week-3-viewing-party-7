@@ -15,14 +15,15 @@ class UsersController <ApplicationController
     if new_user.save
       session[:user_id] = new_user[:id]
       flash[:success] = "Welcome, #{new_user.name}!"
+      # require 'pry';binding.pry
       
-      if user.admin? 
+      if new_user.admin? 
         redirect_to admin_dashboard_path
-      elsif user.manager?
+      elsif new_user.manager?
         redirect_to root_path
       else
-        redirect_to root_path
-        # redirect_to user_path(new_user)
+        # redirect_to root_path
+        redirect_to user_path(new_user)
       end
     else  
       flash[:error] = new_user.errors.full_messages.to_sentence
@@ -44,9 +45,9 @@ class UsersController <ApplicationController
       elsif user.manager?
         redirect_to root_path
       else
-        redirect_to root_path
+        # redirect_to root_path
+        redirect_to user_path(user)
       end
-      # redirect_to user_path(user)
     else
       flash[:error] = "Credentials are incorrect"
       redirect_to login_path
@@ -56,6 +57,6 @@ class UsersController <ApplicationController
   private 
 
   def user_params 
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :role)
   end 
 end 
