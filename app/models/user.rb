@@ -7,11 +7,11 @@ class User <ApplicationRecord
   
   enum role: %w[default manager admin]
 
-  def admin?
-    true if role == "admin"
-  end
+  # def admin?
+  #   true if role == "admin"
+  # end
 
-  def manager?
-    true if role == "manager"
-  end
+  # def manager?
+  #   true if role == "manager"
+  # end
 end 
