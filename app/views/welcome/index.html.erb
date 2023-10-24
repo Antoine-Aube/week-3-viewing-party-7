@@ -3,13 +3,13 @@
 <% if current_user %>
     <p> Currently logged in as: <%= current_user.email %> </p>
     <%= link_to "Log out", logout_path %>
-<% else %>
-    <%= button_to "Create New User", register_path, method: :get %>
-    <%= link_to "Log in", login_form_path %>
     <section class='existing-users'>
         <p>Existing Users: </p>
         <% @users.each do |user| %>
-            <li><%= link_to user.email, user_path(user.id) %></li>
+            <li><%= user.email %></li>
         <% end %>
     </section>
+<% else %>
+    <%= button_to "Create New User", register_path, method: :get %>
+    <%= link_to "Log in", login_form_path %>
 <% end %>

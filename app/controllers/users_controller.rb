@@ -1,4 +1,6 @@
 class UsersController <ApplicationController 
+  before_action :require_login, only: [:show]
+  
   def new 
     @user = User.new()
   end 
@@ -64,4 +66,15 @@ class UsersController <ApplicationController
   def user_params 
     params.require(:user).permit(:name, :email, :password, :password_confirmation, :role)
   end 
+
+  def require_login
+    unless logged_in?
+      flash[:error] = "You must be logged in to access your dashboard"
+      redirect_to root_path
+    end
+  end
+
+  def logged_in?
+    session[:user_id] != nil
+  end
 end 
