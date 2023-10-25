@@ -1,15 +1,20 @@
 class ViewingPartiesController < ApplicationController 
   before_action :require_login, only: [:new, :create]
-  
+
   def new
-    @user = User.find(params[:user_id])
+    @user = User.find(session[:user_id])
     @movie = Movie.find(params[:movie_id])
   end 
   
   def create 
-    user = User.find(params[:user_id])
+    user = User.find(session[:user_id])
+    # require 'pry';binding.pry
     user.viewing_parties.create(viewing_party_params)
-    redirect_to "/users/#{params[:user_id]}"
+    if user.admin? 
+      redirect_to admin_dashboard_path
+    else
+      redirect_to user_path(user)
+    end
   end 
 
   private 
